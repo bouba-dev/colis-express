@@ -13,15 +13,7 @@ import Link from "next/link"
 export default function AjouterColis() {
   const router = useRouter()
   const [step, setStep] = useState(1)
-  const [formData, setFormData] = useState<{
-    nomDestinataire: string
-    telephone: string
-    adresse: string
-    typeColis: string
-    poids: string
-    valeur: string
-    photo: File | null
-  }>({
+  const [formData, setFormData] = useState({
     nomDestinataire: "",
     telephone: "",
     adresse: "",
@@ -121,12 +113,10 @@ export default function AjouterColis() {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="typeColis" id="typeColis-label">Type de colis</Label>
+                  <Label htmlFor="typeColis">Type de colis</Label>
                   <select
                     id="typeColis"
                     name="typeColis"
-                    aria-labelledby="typeColis-label"
-                    aria-label="Type de colis"
                     className="w-full rounded-md border border-gray-300 p-2"
                     value={formData.typeColis}
                     onChange={(e) => setFormData((prev) => ({ ...prev, typeColis: e.target.value }))}
