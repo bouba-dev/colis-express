@@ -33,7 +33,7 @@ export default function AjouterUtilisateur() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log("Données utilisateur:", formData)
-    // Ici, vous ajouteriez la logique pour enregistrer l'utilisateur
+ 
     router.push("/admin/utilisateurs")
   }
 
@@ -71,7 +71,7 @@ export default function AjouterUtilisateur() {
           </Link>
           <Link
             href="/admin/utilisateurs"
-            className="flex items-center border-l-4 border-blue-600 bg-blue-50 px-4 py-3 text-blue-600"
+            className="flex items-center border-l-4 border-blue-600 bg-blue-50 px-4 py-3 text-blue-600 hover:bg-blue-50 hover:text-blue-600"
           >
             <Users className="mr-3 h-5 w-5" />
             Gestion des utilisateurs
@@ -114,21 +114,6 @@ export default function AjouterUtilisateur() {
                 <Label htmlFor="contact">Contact</Label>
                 <Input id="contact" name="contact" value={formData.contact} onChange={handleChange} required />
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="role">Rôle</Label>
-                <select
-                  id="role"
-                  name="role"
-                  className="w-full rounded-md border border-gray-300 p-2"
-                  value={formData.role}
-                  onChange={handleSelectChange}
-                >
-                  <option value="Client">Client</option>
-                  <option value="Admin">Admin</option>
-                </select>
-              </div>
-
               <div className="pt-4">
                 <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
                   Ajouter

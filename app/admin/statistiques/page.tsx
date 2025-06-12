@@ -57,6 +57,7 @@ export default function Statistiques() {
             <BarChart2 className="mr-3 h-5 w-5" />
             Statistiques
           </Link>
+         
           <Link
             href="/admin/utilisateurs"
             className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-600 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"

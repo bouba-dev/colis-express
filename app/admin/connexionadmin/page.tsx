@@ -34,8 +34,8 @@ export default function ConnexionAdmin() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-blue-500 p-4">
-      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+    <div className="flex min-h-screen items-center justify-center  p-4">
+      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-2xl shadow-black">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold">
             <span className="text-blue-600">Coli</span>

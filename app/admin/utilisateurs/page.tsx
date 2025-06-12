@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { LayoutDashboard, Package, BarChart2, Users, LogOut, Search, Plus, Edit, Trash2, Link2 } from "lucide-react"
+import { LayoutDashboard, Package, BarChart2, Users, LogOut, Search, Plus, Edit, Trash2 } from "lucide-react"
 
 export default function GestionUtilisateurs() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -98,6 +98,7 @@ export default function GestionUtilisateurs() {
             <BarChart2 className="mr-3 h-5 w-5" />
             Statistiques
           </Link>
+         
           <Link
             href="/admin/utilisateurs"
             className="flex items-center border-l-4 border-blue-600 bg-blue-50 px-4 py-3 text-blue-600"
@@ -153,7 +154,6 @@ export default function GestionUtilisateurs() {
                     <th className="pb-3 pr-4">Nom</th>
                     <th className="pb-3 pr-4">Email</th>
                     <th className="pb-3 pr-4">Téléphone</th>
-                    <th className="pb-3 pr-4">Rôle</th>
                     <th className="pb-3 pr-4">Date d&apos;inscription</th>
                     <th className="pb-3 pr-4">Actions</th>
                   </tr>
@@ -165,16 +165,6 @@ export default function GestionUtilisateurs() {
                       <td className="py-3 pr-4">{user.nom}</td>
                       <td className="py-3 pr-4">{user.email}</td>
                       <td className="py-3 pr-4">{user.telephone}</td>
-                      <td className="py-3 pr-4">
-                        <select
-                          className="rounded border border-gray-300 px-2 py-1 text-sm"
-                          value={user.role}
-                          onChange={(e) => handleChangeRole(user.id, e.target.value)}
-                        >
-                          <option value="Client">Client</option>
-                          <option value="Admin">Admin</option>
-                        </select>
-                      </td>
                       <td className="py-3 pr-4">{user.dateInscription}</td>
                       <td className="py-3 pr-4">
                         <div className="flex gap-2">

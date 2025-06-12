@@ -11,6 +11,9 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+body{
+  background-color: white;
+}
 
 @layer base {
   :root {

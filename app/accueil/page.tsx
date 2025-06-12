@@ -6,7 +6,20 @@ import { Button } from "@/components/ui/button";
 import { Eye, Package, BarChart3 } from "lucide-react";
 import { LogoutButton } from "@/components/logout-button";
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
+
+
+
 export default function Accueil() {
+  useEffect(() => {
+    AOS.init({
+      duration: 3000,  // durée de l'animation en ms
+      once: true,      // si tu veux que l'animation se joue qu'une seule fois
+    });
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-blue-500 to-blue-700 text-white">
     
@@ -32,7 +45,7 @@ export default function Accueil() {
      
       <section className="flex flex-wrap justify-center gap-8 px-6">
        
-        <div className="flex flex-col bg-white text-black rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-105 w-[350px]">
+        <div className="flex flex-col bg-white text-black rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-105 w-[350px]" data-aos="fade-right">
           <Image
             src="/font.jpg"
             alt="Ajouter un colis"
@@ -51,7 +64,7 @@ export default function Accueil() {
         </div>
 
         
-        <div className="flex flex-col bg-white text-black rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-105 w-[350px]">
+        <div className="flex flex-col bg-white text-black rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-105 w-[350px]" data-aos="fade-up">
           <Image
             src="/suivie.jpeg"
             alt="Suivre un colis"
@@ -70,7 +83,7 @@ export default function Accueil() {
         </div>
 
 
-        <div className="flex flex-col bg-white text-black rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-105 w-[350px]">
+        <div className="flex flex-col bg-white text-black rounded-xl overflow-hidden shadow-lg transition-transform hover:scale-105 w-[350px]" data-aos="fade-left">
           <Image
             src="/stat.jpeg"
             alt="Voir les statistiques"

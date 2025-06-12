@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "ColiExpress - Gestion de Colis",
+  title: "ColiExpress ",
   description: "Plateforme de gestion de colis en ligne",
     generator: 'v0.dev'
 }
