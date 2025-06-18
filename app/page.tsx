@@ -12,9 +12,10 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="bg-white text-gray-800 dark:from-gray-900 dark:to-black dark:text-gray-100 min-h-screen flex flex-col">
+    <div className=" text-gray-800 dark:from-gray-900 dark:to-black dark:text-gray-100 min-h-screen flex flex-col">
+      
       {/* Navbar */}
-      <header className="w-full px-6 py-4 flex items-center justify-between bg-white dark:bg-gray-900 shadow-md">
+      <header className="w-full px-6 py-4 flex items-center justify-between bg-white dark:bg-gray-900 shadow-md ">
         <h1 className="text-2xl font-bold">
           <span className="text-blue-600">Coli</span>
           <span className="text-amber-500">Express</span>
@@ -25,11 +26,24 @@ export default function HomePage() {
       </header>
 
       {/* Main content */}
+  <div
+    className="fer"
+    style={{ 
+      backgroundImage: "url('/font.jpg')", 
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    }}
+    
+  >
+     
       <main className="flex-grow flex flex-col items-center justify-center px-4 py-12">
+        
+     
         <section
-          className="w-full max-w-3xl bg-blue-100 dark:bg-gray-800 rounded-2xl p-10 shadow-xl"
-          data-aos="fade-up"
-        >
+  className="w-full max-w-3xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl p-10 shadow-xl"
+  data-aos="fade-up"
+>
+
           <div className="text-center mb-8 ">
             <h2 className="text-4xl font-extrabold">
               Bienvenue sur <span className="text-blue-600">Coli</span>
@@ -73,7 +87,8 @@ export default function HomePage() {
           ].map(({ title, desc, delay }) => (
             <div
               key={title}
-              className=" dark:bg-gray-800 p-6 rounded-xl shadow-lg bg-blue-100"
+              className=" dark:bg-gray-800 p-6 rounded-xl shadow-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-md
+"
               data-aos="fade-up"
               data-aos-delay={delay}
             >
@@ -82,10 +97,9 @@ export default function HomePage() {
             </div>
           ))}
         </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="w-full bg-blue-900 text-white text-center py-6 mt-12 border-t border-blue-700">
+         </main>
+         </div>
+      <footer className="w-full bg-blue-900 text-white text-center py-6  border-t border-blue-700">
         <p className="text-sm mb-1">
           &copy; {new Date().getFullYear()} ColiExpress. Tous droits réservés.
         </p>

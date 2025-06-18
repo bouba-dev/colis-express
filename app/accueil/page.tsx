@@ -120,7 +120,9 @@ export default function Accueil() {
             </div>
           </footer>
         </div>
+ 
       </div>
     </>
-  );
+
+
 }
