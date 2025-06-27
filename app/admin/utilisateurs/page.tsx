@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,59 +8,20 @@ import { LayoutDashboard, Package, BarChart2, Users, LogOut, Search, Plus, Edit,
 
 export default function GestionUtilisateurs() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [utilisateurs, setUtilisateurs] = useState([
-    {
-      id: "U001",
-      nom: "Mohamed Touré",
-      email: "mohamed.toure@example.com",
-      telephone: "+223 70 12 34 56",
-      role: "Client",
-      dateInscription: "15/01/2025",
-    },
-    {
-      id: "U002",
-      nom: "Fatoumata Diallo",
-      email: "fatoumata.diallo@example.com",
-      telephone: "+223 76 23 45 67",
-      role: "Client",
-      dateInscription: "22/01/2025",
-    },
-    {
-      id: "U003",
-      nom: "Amadou Sanogo",
-      email: "amadou.sanogo@example.com",
-      telephone: "+223 65 34 56 78",
-      role: "Admin",
-      dateInscription: "05/12/2024",
-    },
-    {
-      id: "U004",
-      nom: "Aïssata Traoré",
-      email: "aissata.traore@example.com",
-      telephone: "+223 79 45 67 89",
-      role: "Client",
-      dateInscription: "18/02/2025",
-    },
-    {
-      id: "U005",
-      nom: "Ibrahim Coulibaly",
-      email: "ibrahim.coulibaly@example.com",
-      telephone: "+223 66 56 78 90",
-      role: "Admin",
-      dateInscription: "10/11/2024",
-    },
-  ])
+  const [utilisateurs, setUtilisateurs] = useState([])
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/utilisateur")
+      .then((res) => res.json())
+      .then((data) => setUtilisateurs(data))
+  }, [])
 
   const filteredUtilisateurs = utilisateurs.filter(
     (user) =>
-      user.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()),
+      (user.id + "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (user.nom + " " + (user.prenom || "")).toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (user.email || "").toLowerCase().includes(searchTerm.toLowerCase()),
   )
-
-  const handleChangeRole = (id: string, newRole: string) => {
-    setUtilisateurs(utilisateurs.map((user) => (user.id === id ? { ...user, role: newRole } : user)))
-  }
 
   const handleDelete = (id: string) => {
     setUtilisateurs(utilisateurs.filter((user) => user.id !== id))
@@ -135,13 +96,11 @@ export default function GestionUtilisateurs() {
                 <Search className="h-5 w-5" />
               </Button>
             </div>
-            <Link 
-            href="utilisateurs/ajouter"
-            >
+            <Link href="utilisateurs/ajouter">
               <Button className="flex items-center gap-2 bg-green-600 hover:bg-green-700">
-              <Plus className="h-5 w-5" />
-              Ajouter un utilisateur
-            </Button>
+                <Plus className="h-5 w-5" />
+                Ajouter un utilisateur
+              </Button>
             </Link>
           </div>
 
@@ -149,23 +108,21 @@ export default function GestionUtilisateurs() {
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
-                  <tr className="border-b text-left">
-                    <th className="pb-3 pr-4">ID</th>
-                    <th className="pb-3 pr-4">Nom</th>
-                    <th className="pb-3 pr-4">Email</th>
-                    <th className="pb-3 pr-4">Téléphone</th>
-                    <th className="pb-3 pr-4">Date d&apos;inscription</th>
-                    <th className="pb-3 pr-4">Actions</th>
+                  <tr className="bg-blue-600 text-left text-white">
+                    <th className="p-2">Nom complet</th>
+                    <th className="p-2">Email</th>
+                    <th className="p-2">Contact</th>
+                    <th className="p-2">Rôle</th>
+                    <th className="p-2">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredUtilisateurs.map((user) => (
                     <tr key={user.id} className="border-b">
-                      <td className="py-3 pr-4">{user.id}</td>
-                      <td className="py-3 pr-4">{user.nom}</td>
+                      <td className="py-3 pr-4">{user.nom} {user.prenom}</td>
                       <td className="py-3 pr-4">{user.email}</td>
-                      <td className="py-3 pr-4">{user.telephone}</td>
-                      <td className="py-3 pr-4">{user.dateInscription}</td>
+                      <td className="py-3 pr-4">{user.contact}</td>
+                      <td className="py-3 pr-4">{user.role}</td>
                       <td className="py-3 pr-4">
                         <div className="flex gap-2">
                           <Button size="sm" variant="outline" className="text-blue-600 hover:bg-blue-50">
@@ -183,6 +140,11 @@ export default function GestionUtilisateurs() {
                       </td>
                     </tr>
                   ))}
+                  {filteredUtilisateurs.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="p-2 text-center">Aucun utilisateur trouvé.</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -17,8 +17,17 @@ export default function AjouterUtilisateur() {
     prenom: "",
     adresse: "",
     contact: "",
+    email: "",
+    mot_de_passe: "",
     role: "Client",
   })
+  const [utilisateurs, setUtilisateurs] = useState([])
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/utilisateur")
+      .then((res) => res.json())
+      .then((data) => setUtilisateurs(data))
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -30,11 +39,33 @@ export default function AjouterUtilisateur() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Données utilisateur:", formData)
- 
-    router.push("/admin/utilisateurs")
+
+    // Prépare les données à envoyer (adapte les noms de champs selon ta base)
+    const dataToSend = {
+      nom: formData.nom,
+      prenom: formData.prenom,
+      adresse: formData.adresse,
+      contact: formData.contact,
+      email: formData.email,
+      mot_de_passe: formData.mot_de_passe,
+      role: formData.role || "Client",
+    }
+
+    const res = await fetch("http://localhost:3000/api/utilisateur", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dataToSend),
+    })
+
+    if (res.ok) {
+      alert("Utilisateur ajouté !")
+      router.push("/admin/utilisateurs")
+    } else {
+      const error = await res.json().catch(() => ({}))
+      alert(error.message || "Erreur lors de l'ajout")
+    }
   }
 
   return (
@@ -114,6 +145,14 @@ export default function AjouterUtilisateur() {
                 <Label htmlFor="contact">Contact</Label>
                 <Input id="contact" name="contact" value={formData.contact} onChange={handleChange} required />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" name="email" value={formData.email} onChange={handleChange} required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="mot_de_passe">Mot de passe</Label>
+                <Input id="mot_de_passe" name="mot_de_passe" type="password" value={formData.mot_de_passe} onChange={handleChange} required />
+              </div>
               <div className="pt-4">
                 <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
                   Ajouter
@@ -129,36 +168,26 @@ export default function AjouterUtilisateur() {
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="bg-blue-600 text-left text-white">
-                    <th className="p-2">Nom</th>
-                    <th className="p-2">Prénom</th>
-                    <th className="p-2">Adresse</th>
-                    <th className="p-2">Contact</th>
-                    <th className="p-2">Action</th>
+                    <th className="p-2">Nom complet</th>
+                    <th className="p-2">Email</th>
+                    <th className="p-2">Rôle</th>
+                    {/* Ajoute d'autres colonnes si besoin */}
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b">
-                    <td className="p-2">Dia</td>
-                    <td className="p-2">Fousseyni</td>
-                    <td className="p-2">Bamako</td>
-                    <td className="p-2">77 56 67 66</td>
-                    <td className="p-2">
-                      <Button size="sm" className="bg-red-500 hover:bg-red-600">
-                        Supprimer
-                      </Button>
-                    </td>
-                  </tr>
-                  <tr className="border-b">
-                    <td className="p-2">Coulibaly</td>
-                    <td className="p-2">Sadio</td>
-                    <td className="p-2">Bamako</td>
-                    <td className="p-2">84 84 45 56</td>
-                    <td className="p-2">
-                      <Button size="sm" className="bg-red-500 hover:bg-red-600">
-                        Supprimer
-                      </Button>
-                    </td>
-                  </tr>
+                  {utilisateurs.map((u) => (
+                    <tr key={u.id}>
+                      <td className="p-2">{u.nom_complet}</td>
+                      <td className="p-2">{u.email}</td>
+                      <td className="p-2">{u.role}</td>
+                      {/* Ajoute d'autres colonnes si besoin */}
+                    </tr>
+                  ))}
+                  {utilisateurs.length === 0 && (
+                    <tr>
+                      <td colSpan={3} className="p-2 text-center">Aucun utilisateur trouvé.</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
