@@ -12,9 +12,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="bg-white text-gray-800 dark:from-gray-900 dark:to-black dark:text-gray-100 min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       {/* Navbar */}
-      <header className="w-full px-6 py-4 flex items-center justify-between bg-white dark:bg-gray-900 shadow-md">
+      <header className="w-full px-6 py-4 flex items-center justify-between bg-white/95 backdrop-blur-sm shadow-md">
         <h1 className="text-2xl font-bold">
           <span className="text-blue-600">Coli</span>
           <span className="text-amber-500">Express</span>
@@ -27,24 +27,24 @@ export default function HomePage() {
       {/* Main content */}
       <main className="flex-grow flex flex-col items-center justify-center px-4 py-12">
         <section
-          className="w-full max-w-3xl bg-blue-100 dark:bg-gray-800 rounded-2xl p-10 shadow-xl"
+          className="w-full max-w-3xl bg-white/95 backdrop-blur-sm rounded-2xl p-10 shadow-xl"
           data-aos="fade-up"
         >
           <div className="text-center mb-8 ">
-            <h2 className="text-4xl font-extrabold">
+            <h2 className="text-4xl font-extrabold text-gray-800">
               Bienvenue sur <span className="text-blue-600">Coli</span>
               <span className="text-amber-500">Express</span>
             </h2>
-            <p className="mt-3 text-lg text-gray-600 dark:text-gray-300">
+            <p className="mt-3 text-lg text-gray-700">
               Livraison intelligente, rapide et sécurisée à travers tout le Mali.
             </p>
           </div>
-          <div className="space-y-4 text-justify text-gray-700 dark:text-gray-300">
+          <div className="space-y-4 text-justify text-gray-700">
             <p>
               ColiExpress est une plateforme moderne qui simplifie l'envoi, le suivi et la réception de colis. Grâce à notre technologie de géolocalisation, vous suivez vos livraisons en temps réel.
             </p>
             <p>
-              Que vous soyez un particulier ou une entreprise, bénéficiez d’un service rapide, fiable et soutenu par un support client dédié.
+              Que vous soyez un particulier ou une entreprise, bénéficiez d'un service rapide, fiable et soutenu par un support client dédié.
             </p>
             <p>
               Rejoignez-nous et découvrez une nouvelle façon d'expédier et recevoir vos colis avec confiance.
@@ -73,24 +73,25 @@ export default function HomePage() {
           ].map(({ title, desc, delay }) => (
             <div
               key={title}
-              className=" dark:bg-gray-800 p-6 rounded-xl shadow-lg bg-blue-100"
+              className="bg-white/95 backdrop-blur-sm p-6 rounded-xl shadow-lg"
               data-aos="fade-up"
               data-aos-delay={delay}
             >
-              <h3 className="text-xl font-semibold mb-2 text-blue-700 dark:text-blue-400">{title}</h3>
-              <p className="text-gray-700 dark:text-gray-300">{desc}</p>
+              <h3 className="text-xl font-semibold mb-2 text-blue-700">{title}</h3>
+              <p className="text-gray-700">{desc}</p>
             </div>
           ))}
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="w-full bg-blue-900 text-white text-center py-6 mt-12 border-t border-blue-700">
+      <footer className="w-full bg-white/95 backdrop-blur-sm text-gray-800 text-center py-6 mt-12 border-t border-gray-200">
         <p className="text-sm mb-1">
           &copy; {new Date().getFullYear()} ColiExpress. Tous droits réservés.
         </p>
         <p>
-          Contact : +223 76743770 / Email : <a href="mailto:sanghoboubacar04@gmail.com" className="underline">sanghoboubacar04@gmail.com</a>
+          Contact : +223 76743770 / Email : <a href="mailto:sanghoboubacar04@gmail.com" className="underline text-blue-600">sanghoboubacar04@gmail.com</a> / 
+          <a href="mailto:konibacisse20@gmail.com" className="underline text-blue-600 ml-1">konibacisse20@gmail.com</a>
         </p>
       </footer>
     </div>

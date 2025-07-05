@@ -41,7 +41,7 @@ export default function Inscription() {
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
-      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-2xl shadow-black">
+      <div className="w-full max-w-md rounded-lg bg-white/95 backdrop-blur-sm p-6 shadow-2xl shadow-black">
         <div className="mb-6 text-center">
           <h1 className="text-3xl font-bold">
             <span className="text-blue-600">Coli</span>
@@ -55,29 +55,55 @@ export default function Inscription() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="nom">Prénom et nom</Label>
-            <Input id="nom" name="nom" value={formData.nom} onChange={handleChange} required />
+            <Label htmlFor="nom" className="text-gray-700 font-medium">Prénom et nom</Label>
+            <Input 
+              id="nom" 
+              name="nom" 
+              value={formData.nom} 
+              onChange={handleChange} 
+              required 
+              className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500"
+              placeholder="Entrez votre nom complet"
+            />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="contact">Contact</Label>
-            <Input id="contact" name="contact" value={formData.contact} onChange={handleChange} required />
+            <Label htmlFor="contact" className="text-gray-700 font-medium">Contact</Label>
+            <Input 
+              id="contact" 
+              name="contact" 
+              value={formData.contact} 
+              onChange={handleChange} 
+              required 
+              className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500"
+              placeholder="Votre numéro de téléphone"
+            />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="adresse">Adresse</Label>
-            <Input id="adresse" name="adresse" value={formData.adresse} onChange={handleChange} required />
+            <Label htmlFor="adresse" className="text-gray-700 font-medium">Adresse</Label>
+            <Input 
+              id="adresse" 
+              name="adresse" 
+              value={formData.adresse} 
+              onChange={handleChange} 
+              required 
+              className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500"
+              placeholder="Votre adresse complète"
+            />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="motDePasse">Mot de passe</Label>
+            <Label htmlFor="motDePasse" className="text-gray-700 font-medium">Mot de passe</Label>
             <Input
               id="motDePasse"
               name="motDePasse"
-              type="password"
+              type="text"
               value={formData.motDePasse}
               onChange={handleChange}
               required
+              className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500"
+              placeholder="Choisissez un mot de passe"
             />
           </div>
 
@@ -107,8 +133,8 @@ export default function Inscription() {
         </form>
 
         <div className="mt-4 text-center text-sm">
-          Vous avez déjà un compte?{" "}
-          <Link href="/connexion" className="text-amber-500 hover:underline">
+          <span className="text-gray-800 font-medium">Vous avez déjà un compte? </span>
+          <Link href="/connexion" className="text-blue-600 hover:text-blue-800 font-semibold underline">
             Connectez-vous
           </Link>
         </div>

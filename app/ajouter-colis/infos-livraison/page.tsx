@@ -40,8 +40,8 @@ export default function InfosLivraison() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-blue-500">
-      <header className="bg-white p-4 shadow-md">
+    <div className="flex min-h-screen flex-col">
+      <header className="bg-white/95 backdrop-blur-sm p-4 shadow-md">
         <div className="mx-auto flex max-w-6xl items-center">
           <Link href="/ajouter-colis" className="mr-4">
             <ArrowLeft className="h-6 w-6 text-blue-600" />
@@ -54,45 +54,47 @@ export default function InfosLivraison() {
       </header>
 
       <main className="flex flex-1 items-center justify-center p-4">
-        <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+        <div className="w-full max-w-md rounded-lg bg-white/95 backdrop-blur-sm p-6 shadow-lg">
           <div className="mb-6 text-center">
             <h2 className="text-xl font-medium text-blue-600">Infos de livraison</h2>
           </div>
 
           <div className="space-y-6">
             <div className="space-y-2">
-              <Label>Modes de livraison:</Label>
+              <Label className="text-gray-700 font-medium">Modes de livraison:</Label>
               <RadioGroup value={formData.modeLivraison} onValueChange={handleModeChange} className="flex gap-4">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="standard" id="standard" />
-                  <Label htmlFor="standard">Standard</Label>
+                  <Label htmlFor="standard" className="text-gray-700">Standard</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="express" id="express" />
-                  <Label htmlFor="express">Express</Label>
+                  <Label htmlFor="express" className="text-gray-700">Express</Label>
                 </div>
               </RadioGroup>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="date">Date:</Label>
+              <Label htmlFor="date" className="text-gray-700 font-medium">Date:</Label>
               <input
                 type="date"
                 id="date"
-                className="w-full rounded-md border border-gray-300 p-2"
+                className="w-full rounded-md border border-gray-300 p-2 bg-white text-gray-800"
                 value={formData.date}
                 onChange={handleDateChange}
                 required
+                aria-label="Sélectionner la date de livraison"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="agence">Agence:</Label>
+              <Label htmlFor="agence" className="text-gray-700 font-medium">Agence:</Label>
               <select
                 id="agence"
-                className="w-full rounded-md border border-gray-300 p-2"
+                className="w-full rounded-md border border-gray-300 p-2 bg-white text-gray-800"
                 value={formData.agence}
                 onChange={handleAgenceChange}
+                aria-label="Sélectionner l'agence de livraison"
               >
                 <option value="Nour Transport">Nour Transport</option>
                 <option value="Tilemsi">Tilemsi</option>

@@ -27,47 +27,44 @@ export default function Statistiques() {
 
   return (
     <div className="flex min-h-screen">
-     
-
-  
-      <div className="flex-1 bg-gray-50">
-      <header className="bg-white p-4 shadow-md">
-        <div className="mx-auto flex max-w-6xl items-center">
-          <Link href="/accueil" className="mr-2">
-            <ArrowLeft className="h-6 w-6 text-blue-600" />
-          </Link>
-          <h1 className="text-2xl font-bold">
-            <span className="text-blue-600">Coli</span>
-            <span className="text-amber-500">Express</span>
-          </h1>
-        </div>
-      </header>
+      <div className="flex-1">
+        <header className="bg-white/95 backdrop-blur-sm p-4 shadow-md">
+          <div className="mx-auto flex max-w-6xl items-center">
+            <Link href="/accueil" className="mr-2">
+              <ArrowLeft className="h-6 w-6 text-blue-600" />
+            </Link>
+            <h1 className="text-2xl font-bold">
+              <span className="text-blue-600">Coli</span>
+              <span className="text-amber-500">Express</span>
+            </h1>
+          </div>
+        </header>
 
         <main className="p-6">
           {/* Summary */}
           <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-4">
-            <div className="rounded-lg border bg-white p-6 shadow-sm">
-              <h3 className="mb-2 text-lg font-medium text-gray-500">Total des colis</h3>
+            <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
+              <h3 className="mb-2 text-lg font-medium text-gray-700">Total des colis</h3>
               <p className="text-3xl font-bold text-blue-600">{statistiques.total}</p>
             </div>
-            <div className="rounded-lg border bg-white p-6 shadow-sm">
-              <h3 className="mb-2 text-lg font-medium text-gray-500">En attente</h3>
+            <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
+              <h3 className="mb-2 text-lg font-medium text-gray-700">En attente</h3>
               <p className="text-3xl font-bold text-yellow-500">{statistiques.enAttente}</p>
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-2 text-sm text-gray-600">
                 {Math.round((statistiques.enAttente / statistiques.total) * 100)}% du total
               </p>
             </div>
-            <div className="rounded-lg border bg-white p-6 shadow-sm">
-              <h3 className="mb-2 text-lg font-medium text-gray-500">En transit</h3>
+            <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
+              <h3 className="mb-2 text-lg font-medium text-gray-700">En transit</h3>
               <p className="text-3xl font-bold text-blue-500">{statistiques.enTransit}</p>
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-2 text-sm text-gray-600">
                 {Math.round((statistiques.enTransit / statistiques.total) * 100)}% du total
               </p>
             </div>
-            <div className="rounded-lg border bg-white p-6 shadow-sm">
-              <h3 className="mb-2 text-lg font-medium text-gray-500">Livrés</h3>
+            <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
+              <h3 className="mb-2 text-lg font-medium text-gray-700">Livrés</h3>
               <p className="text-3xl font-bold text-green-500">{statistiques.livres}</p>
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-2 text-sm text-gray-600">
                 {Math.round((statistiques.livres / statistiques.total) * 100)}% du total
               </p>
             </div>
@@ -76,14 +73,14 @@ export default function Statistiques() {
           {/* Charts */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Agences */}
-            <div className="rounded-lg border bg-white p-6 shadow-sm">
-              <h3 className="mb-6 text-xl font-semibold">Colis par agence</h3>
+            <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
+              <h3 className="mb-6 text-xl font-semibold text-gray-800">Colis par agence</h3>
               <div className="space-y-4">
                 {statistiques.agences.map((agence) => (
                   <div key={agence.nom}>
                     <div className="mb-1 flex justify-between">
-                      <span>{agence.nom}</span>
-                      <span className="font-medium">{agence.colis}</span>
+                      <span className="text-gray-700">{agence.nom}</span>
+                      <span className="font-medium text-gray-800">{agence.colis}</span>
                     </div>
                     <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
                       <div
@@ -97,14 +94,14 @@ export default function Statistiques() {
             </div>
 
             {/* Destinations */}
-            <div className="rounded-lg border bg-white p-6 shadow-sm">
-              <h3 className="mb-6 text-xl font-semibold">Colis par destination</h3>
+            <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
+              <h3 className="mb-6 text-xl font-semibold text-gray-800">Colis par destination</h3>
               <div className="space-y-4">
                 {statistiques.destinations.map((destination) => (
                   <div key={destination.nom}>
                     <div className="mb-1 flex justify-between">
-                      <span>{destination.nom}</span>
-                      <span className="font-medium">{destination.colis}</span>
+                      <span className="text-gray-700">{destination.nom}</span>
+                      <span className="font-medium text-gray-800">{destination.colis}</span>
                     </div>
                     <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
                       <div

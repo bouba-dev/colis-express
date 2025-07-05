@@ -84,7 +84,7 @@ export default function GestionColis() {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <div className="w-64 border-r bg-white">
+      <div className="w-64 border-r bg-white/95 backdrop-blur-sm">
         <div className="p-4">
           <h1 className="text-2xl font-bold">
             <span className="text-blue-600">Coli</span>
@@ -94,7 +94,7 @@ export default function GestionColis() {
         <nav className="mt-6">
           <Link
             href="/admin/dashboard"
-            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-600 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
+            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-700 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
           >
             <LayoutDashboard className="mr-3 h-5 w-5" />
             Tableau de bord
@@ -108,14 +108,14 @@ export default function GestionColis() {
           </Link>
           <Link
             href="/admin/statistiques"
-            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-600 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
+            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-700 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
           >
             <BarChart2 className="mr-3 h-5 w-5" />
             Statistiques
           </Link>
           <Link
             href="/admin/utilisateurs"
-            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-600 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
+            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-700 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
           >
             <Users className="mr-3 h-5 w-5" />
             Gestion des utilisateurs
@@ -132,8 +132,8 @@ export default function GestionColis() {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 bg-gray-50">
-        <header className="border-b bg-white p-4 shadow-sm">
+      <div className="flex-1">
+        <header className="border-b bg-white/95 backdrop-blur-sm p-4 shadow-sm">
           <h2 className="text-2xl font-semibold text-blue-600">Gestion des colis</h2>
         </header>
 
@@ -144,6 +144,7 @@ export default function GestionColis() {
                 placeholder="Rechercher un colis..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                className="bg-white text-gray-800 placeholder-gray-500"
               />
               <Button className="bg-blue-600 hover:bg-blue-700">
                 <Search className="h-5 w-5" />
@@ -159,30 +160,30 @@ export default function GestionColis() {
            </Link>
           </div>
 
-          <div className="rounded-lg border bg-white p-6 shadow-sm">
+          <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b text-left">
-                    <th className="pb-3 pr-4">ID</th>
-                    <th className="pb-3 pr-4">Date</th>
-                    <th className="pb-3 pr-4">Expéditeur</th>
-                    <th className="pb-3 pr-4">Destinataire</th>
-                    <th className="pb-3 pr-4">Destination</th>
-                    <th className="pb-3 pr-4">Agence</th>
-                    <th className="pb-3 pr-4">Statut</th>
-                    <th className="pb-3 pr-4">Actions</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">ID</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Date</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Expéditeur</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Destinataire</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Destination</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Agence</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Statut</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredColis.map((coli) => (
                     <tr key={coli.id} className="border-b">
-                      <td className="py-3 pr-4">{coli.id}</td>
-                      <td className="py-3 pr-4">{coli.date}</td>
-                      <td className="py-3 pr-4">{coli.expediteur}</td>
-                      <td className="py-3 pr-4">{coli.destinataire}</td>
-                      <td className="py-3 pr-4">{coli.destination}</td>
-                      <td className="py-3 pr-4">{coli.agence}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.id}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.date}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.expediteur}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.destinataire}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.destination}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.agence}</td>
                       <td className="py-3 pr-4">
                         <div className="flex items-center gap-2">
                           <span
@@ -194,15 +195,16 @@ export default function GestionColis() {
                                   : "bg-green-400"
                             }`}
                           ></span>
-                          {coli.statut}
+                          <span className="text-gray-800">{coli.statut}</span>
                         </div>
                       </td>
                       <td className="py-3 pr-4">
                         <div className="flex gap-2">
                           <select
-                            className="rounded border border-gray-300 px-2 py-1 text-sm"
+                            className="rounded border border-gray-300 px-2 py-1 text-sm bg-white text-gray-800"
                             value={coli.statut}
                             onChange={(e) => handleChangeStatus(coli.id, e.target.value)}
+                            aria-label={`Changer le statut du colis ${coli.id}`}
                           >
                             <option value="En attente">En attente</option>
                             <option value="En transit">En transit</option>
