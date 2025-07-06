@@ -3,7 +3,7 @@ const mysql = require("mysql");
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "1234567890", // Mets ton mot de passe ici
+  password: "12345567890", // Mets ton mot de passe ici
   database: "gestion_colis", // Mets le nom de ta base ici
 });
 
