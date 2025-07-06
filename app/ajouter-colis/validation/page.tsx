@@ -17,7 +17,6 @@ export default function Validation() {
     montant: "5000",
     statutInitial: "En attente",
     moyenPaiement: "Mobile money",
-    emailSecondaire: "",
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,16 +119,7 @@ export default function Validation() {
                 </select>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="emailSecondaire" className="text-gray-700 font-medium">Email secondaire:</Label>
-                <Input
-                  id="emailSecondaire"
-                  name="emailSecondaire"
-                  value={formData.emailSecondaire}
-                  onChange={handleChange}
-                  className="bg-gray-100 text-gray-800"
-                />
-              </div>
+
 
               <div className="flex justify-center">
                 <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">

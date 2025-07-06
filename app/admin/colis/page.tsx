@@ -1,84 +1,86 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { LayoutDashboard, Package, BarChart2, Users, LogOut, Search, Plus } from "lucide-react"
+import { toast } from "@/components/ui/use-toast"
+import { Colis, getStatusText } from "@/lib/types/colis"
 
 export default function GestionColis() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [colis, setColis] = useState([
-    {
-      id: "001",
-      expediteur: "Mohamed Touré",
-      destinataire: "Mariam Maïga",
-      destination: "Tombouctou",
-      agence: "Tilemsi",
-      statut: "En attente",
-      date: "25/04/2025",
-    },
-    {
-      id: "002",
-      expediteur: "Aly Konaté",
-      destinataire: "Ami Cissé",
-      destination: "Kayes",
-      agence: "Nour Transport",
-      statut: "En attente",
-      date: "26/04/2025",
-    },
-    {
-      id: "003",
-      expediteur: "Fatoumata Lah",
-      destinataire: "Oumou Keita",
-      destination: "Sévaré",
-      agence: "Africa Tours",
-      statut: "En attente",
-      date: "27/04/2025",
-    },
-    {
-      id: "004",
-      expediteur: "Aïcha Sow",
-      destinataire: "Moussa Sy",
-      destination: "Ségou",
-      agence: "Tilemsi",
-      statut: "En attente",
-      date: "28/04/2025",
-    },
-    {
-      id: "005",
-      expediteur: "Ibrahim Diallo",
-      destinataire: "Kadiatou Diop",
-      destination: "Bamako",
-      agence: "Nour Transport",
-      statut: "En transit",
-      date: "24/04/2025",
-    },
-    {
-      id: "006",
-      expediteur: "Seydou Coulibaly",
-      destinataire: "Aminata Traoré",
-      destination: "Mopti",
-      agence: "Africa Tours",
-      statut: "Livré",
-      date: "20/04/2025",
-    },
-  ])
+  const [colis, setColis] = useState<Colis[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchColis() {
+      try {
+        const response = await fetch("/api/colis")
+        const result = await response.json()
+        if (result.error) {
+          toast({
+            title: "Erreur",
+            description: result.error,
+            variant: "destructive",
+          })
+        } else if (result.colis) {
+          setColis(result.colis)
+        }
+      } catch (error) {
+        toast({
+          title: "Erreur",
+          description: "Impossible de récupérer les colis",
+          variant: "destructive",
+        })
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchColis()
+  }, [])
 
   const filteredColis = colis.filter(
     (coli) =>
-      coli.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      coli.expediteur.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      coli.destinataire.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      coli.destination.toLowerCase().includes(searchTerm.toLowerCase()),
+      coli.numero_suivi.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      coli.nom_destinataire.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      coli.adresse_destinataire.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  const handleChangeStatus = (id: string, newStatus: string) => {
+  const handleChangeStatus = (id: number, newStatus: string) => {
     setColis(colis.map((coli) => (coli.id === id ? { ...coli, statut: newStatus } : coli)))
+    // Ici, vous ajouteriez la logique pour mettre à jour le statut en base de données
+    toast({
+      title: "Statut mis à jour",
+      description: `Le statut du colis ${id} a été mis à jour`,
+    })
   }
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: number) => {
     setColis(colis.filter((coli) => coli.id !== id))
+    // Ici, vous ajouteriez la logique pour supprimer le colis en base de données
+    toast({
+      title: "Colis supprimé",
+      description: `Le colis ${id} a été supprimé`,
+    })
+  }
+
+  const getStatusColor = (statut: string) => {
+    switch (statut.toLowerCase()) {
+      case "livre":
+        return "bg-green-400"
+      case "en_transit":
+        return "bg-blue-400"
+      case "en_attente":
+        return "bg-yellow-400"
+      case "en_cours_de_traitement":
+        return "bg-orange-400"
+      case "pret_pour_expedition":
+        return "bg-purple-400"
+      default:
+        return "bg-gray-400"
+    }
   }
 
   return (
@@ -160,72 +162,76 @@ export default function GestionColis() {
            </Link>
           </div>
 
-          <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-b text-left">
-                    <th className="pb-3 pr-4 text-gray-700 font-medium">ID</th>
-                    <th className="pb-3 pr-4 text-gray-700 font-medium">Date</th>
-                    <th className="pb-3 pr-4 text-gray-700 font-medium">Expéditeur</th>
-                    <th className="pb-3 pr-4 text-gray-700 font-medium">Destinataire</th>
-                    <th className="pb-3 pr-4 text-gray-700 font-medium">Destination</th>
-                    <th className="pb-3 pr-4 text-gray-700 font-medium">Agence</th>
-                    <th className="pb-3 pr-4 text-gray-700 font-medium">Statut</th>
-                    <th className="pb-3 pr-4 text-gray-700 font-medium">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredColis.map((coli) => (
-                    <tr key={coli.id} className="border-b">
-                      <td className="py-3 pr-4 text-gray-800">{coli.id}</td>
-                      <td className="py-3 pr-4 text-gray-800">{coli.date}</td>
-                      <td className="py-3 pr-4 text-gray-800">{coli.expediteur}</td>
-                      <td className="py-3 pr-4 text-gray-800">{coli.destinataire}</td>
-                      <td className="py-3 pr-4 text-gray-800">{coli.destination}</td>
-                      <td className="py-3 pr-4 text-gray-800">{coli.agence}</td>
-                      <td className="py-3 pr-4">
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={`h-3 w-3 rounded-full ${
-                              coli.statut === "En attente"
-                                ? "bg-yellow-400"
-                                : coli.statut === "En transit"
-                                  ? "bg-blue-400"
-                                  : "bg-green-400"
-                            }`}
-                          ></span>
-                          <span className="text-gray-800">{coli.statut}</span>
-                        </div>
-                      </td>
-                      <td className="py-3 pr-4">
-                        <div className="flex gap-2">
-                          <select
-                            className="rounded border border-gray-300 px-2 py-1 text-sm bg-white text-gray-800"
-                            value={coli.statut}
-                            onChange={(e) => handleChangeStatus(coli.id, e.target.value)}
-                            aria-label={`Changer le statut du colis ${coli.id}`}
-                          >
-                            <option value="En attente">En attente</option>
-                            <option value="En transit">En transit</option>
-                            <option value="Livré">Livré</option>
-                          </select>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="text-red-600 hover:bg-red-50"
-                            onClick={() => handleDelete(coli.id)}
-                          >
-                            Supprimer
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          {isLoading ? (
+            <div className="flex justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             </div>
-          </div>
+          ) : (
+            <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b text-left">
+                      <th className="pb-3 pr-4 text-gray-700 font-medium">Numéro</th>
+                      <th className="pb-3 pr-4 text-gray-700 font-medium">Date d'envoi</th>
+                      <th className="pb-3 pr-4 text-gray-700 font-medium">Destinataire</th>
+                      <th className="pb-3 pr-4 text-gray-700 font-medium">Adresse</th>
+                      <th className="pb-3 pr-4 text-gray-700 font-medium">Type</th>
+                      <th className="pb-3 pr-4 text-gray-700 font-medium">Poids</th>
+                      <th className="pb-3 pr-4 text-gray-700 font-medium">Montant</th>
+                      <th className="pb-3 pr-4 text-gray-700 font-medium">Statut</th>
+                      <th className="pb-3 pr-4 text-gray-700 font-medium">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredColis.map((coli) => (
+                      <tr key={coli.id} className="border-b">
+                        <td className="py-3 pr-4 text-gray-800 font-medium">{coli.numero_suivi}</td>
+                        <td className="py-3 pr-4 text-gray-800">{new Date(coli.date_envoi).toLocaleDateString('fr-FR')}</td>
+                        <td className="py-3 pr-4 text-gray-800">{coli.nom_destinataire}</td>
+                        <td className="py-3 pr-4 text-gray-800 text-sm">{coli.adresse_destinataire}</td>
+                        <td className="py-3 pr-4 text-gray-800">{coli.type_colis}</td>
+                        <td className="py-3 pr-4 text-gray-800">{coli.poids}kg</td>
+                        <td className="py-3 pr-4 text-gray-800">{coli.montant}€</td>
+                        <td className="py-3 pr-4">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`h-3 w-3 rounded-full ${getStatusColor(coli.statut)}`}
+                            ></span>
+                            <span className="text-gray-800">{getStatusText(coli.statut)}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 pr-4">
+                          <div className="flex gap-2">
+                            <select
+                              className="rounded border border-gray-300 px-2 py-1 text-sm bg-white text-gray-800"
+                              value={coli.statut}
+                              onChange={(e) => handleChangeStatus(coli.id, e.target.value)}
+                              aria-label={`Changer le statut du colis ${coli.numero_suivi}`}
+                            >
+                              <option value="en_attente">En attente</option>
+                              <option value="en_cours_de_traitement">En cours de traitement</option>
+                              <option value="pret_pour_expedition">Prêt pour l'expédition</option>
+                              <option value="en_transit">En transit</option>
+                              <option value="livre">Livré</option>
+                            </select>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="text-red-600 hover:bg-red-50"
+                              onClick={() => handleDelete(coli.id)}
+                            >
+                              Supprimer
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </main>
       </div>
     </div>
