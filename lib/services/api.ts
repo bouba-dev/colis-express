@@ -51,7 +51,19 @@ class ApiService {
   async createColis(colisData: any): Promise<ApiResponse<any>> {
     return this.request<any>('/colis', {
       method: 'POST',
-      body: JSON.stringify(colisData),
+      body: JSON.stringify({
+        nom_destinataire: colisData.nom_destinataire,
+        telephone_destinataire: colisData.telephone_destinataire,
+        adresse_destinataire: colisData.adresse_destinataire,
+        type_colis: colisData.type_colis,
+        poids: parseFloat(colisData.poids) || 0,
+        valeur: parseFloat(colisData.valeur) || 0,
+        utilisateur_id: colisData.utilisateur_id || 1,
+        statut_id: colisData.statut_id || 1,
+        date_envoi: colisData.date_envoi || new Date().toISOString().split('T')[0],
+        montant: parseFloat(colisData.montant) || 0,
+        moyen_paiement: colisData.moyen_paiement || 'Espèces'
+      }),
     })
   }
 

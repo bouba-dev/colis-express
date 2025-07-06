@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { setRoutes } = require("./routes/index");
 require('dotenv').config();
 
 const app = express();
@@ -11,63 +10,21 @@ const PORT = process.env.PORT || 3001;
 let colisData = [
   {
     id: 1,
-    numero_suivi: "ABC123456789",
-    description: "Document important",
+    numero_suivi: "CE123456789",
+    nom_destinataire: "Jean Dupont",
+    telephone_destinataire: "+223 76 12 34 56",
+    adresse_destinataire: "123 Rue de la Paix, Bamako",
+    type_colis: "Document",
     poids: 0.5,
-    destination: "Bamako, Mali",
-    date_envoi: "2025-01-15",
-    utilisateur_id: 1,
-    statut_id: 4,
-    created_at: "2025-01-15T10:30:00Z",
-    updated_at: "2025-01-15T10:30:00Z"
-  },
-  {
-    id: 2,
-    numero_suivi: "DEF987654321",
-    description: "Électronique",
-    poids: 2.5,
-    destination: "Tombouctou, Mali",
-    date_envoi: "2025-01-16",
+    valeur: 25,
+    photo_url: null,
+    montant: 15000,
+    moyen_paiement: "Espèces",
     utilisateur_id: 1,
     statut_id: 1,
-    created_at: "2025-01-16T14:20:00Z",
-    updated_at: "2025-01-16T14:20:00Z"
-  },
-  {
-    id: 3,
-    numero_suivi: "GHI456789123",
-    description: "Vêtements",
-    poids: 1.8,
-    destination: "Kayes, Mali",
-    date_envoi: "2025-01-10",
-    utilisateur_id: 1,
-    statut_id: 5,
-    created_at: "2025-01-10T09:15:00Z",
-    updated_at: "2025-01-14T16:45:00Z"
-  },
-  {
-    id: 4,
-    numero_suivi: "JKL789123456",
-    description: "Alimentation",
-    poids: 3.2,
-    destination: "Sévaré, Mali",
-    date_envoi: "2025-01-17",
-    utilisateur_id: 1,
-    statut_id: 2,
-    created_at: "2025-01-17T11:45:00Z",
-    updated_at: "2025-01-17T11:45:00Z"
-  },
-  {
-    id: 5,
-    numero_suivi: "MNO123456789",
-    description: "Livre",
-    poids: 0.8,
-    destination: "Ségou, Mali",
-    date_envoi: "2025-01-18",
-    utilisateur_id: 1,
-    statut_id: 3,
-    created_at: "2025-01-18T08:30:00Z",
-    updated_at: "2025-01-18T08:30:00Z"
+    date_envoi: "2025-01-15",
+    created_at: "2025-01-15T10:30:00Z",
+    updated_at: "2025-01-15T10:30:00Z"
   }
 ];
 
@@ -121,6 +78,7 @@ app.get("/api/colis/:id", (req, res) => {
 app.post("/api/colis", (req, res) => {
   const newColis = {
     id: colisData.length + 1,
+    numero_suivi: `CE${Date.now()}${Math.floor(Math.random() * 1000)}`,
     ...req.body,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
@@ -203,18 +161,9 @@ app.get("/api/statut", (req, res) => {
   ]);
 });
 
-app.get("/api/notification", (req, res) => {
-  res.json([
-    { id: 1, message: "Nouveau colis créé", lu: false }
-  ]);
-});
-
-setRoutes(app);
-
+// Démarrage du serveur
 app.listen(PORT, () => {
   console.log(`🚀 Serveur backend démarré sur http://localhost:${PORT}`);
   console.log(`📊 API disponible sur http://localhost:${PORT}/api`);
-  console.log(`🌐 CORS configuré pour: ${process.env.CORS_ORIGIN || "http://localhost:3000"}`);
-  console.log(`💾 Mode: développement (données en mémoire)`);
-  console.log(`📦 ${colisData.length} colis chargés en mémoire`);
+  console.log(`🎯 Mode: development (données en mémoire)`);
 });
