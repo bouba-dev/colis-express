@@ -7,14 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Search, Loader2 } from "lucide-react"
 import { UserHeader } from "@/components/user-header"
 import { toast } from "@/components/ui/use-toast"
-
-interface Colis {
-  id: number
-  numero_suivi: string
-  statut: string
-  created_at: string
-  nom_destinataire: string
-}
+import { Colis, getStatusColor, getStatusText } from "@/lib/types/colis"
 
 export default function ListeColis() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -52,7 +45,8 @@ export default function ListeColis() {
   const filteredColis = colis.filter(
     (item) =>
       item.numero_suivi.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.nom_destinataire.toLowerCase().includes(searchTerm.toLowerCase()),
+      item.nom_destinataire.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.adresse_destinataire.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   return (
@@ -65,7 +59,7 @@ export default function ListeColis() {
           </div>
           <div className="mb-4 flex items-center gap-2">
             <Input
-              placeholder="Rechercher par numéro ou destinataire"
+              placeholder="Rechercher par numéro, destinataire ou adresse"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500"
@@ -85,21 +79,13 @@ export default function ListeColis() {
                   <div className="rounded-lg border border-gray-200 p-4 transition-colors hover:border-blue-300 hover:bg-blue-50 bg-white/95 backdrop-blur-sm">
                     <div className="mb-2 font-medium text-blue-600">{item.numero_suivi}</div>
                     <div className="mb-1 text-sm text-gray-700">Destinataire: {item.nom_destinataire}</div>
-                    <div
-                      className={`inline-block rounded-full px-3 py-1 text-sm font-medium ${
-                        item.statut === "livre"
-                          ? "bg-green-100 text-green-800"
-                          : item.statut === "en_transit"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-gray-100 text-gray-800"
-                      }`}
-                    >
-                      Statut:{" "}
-                      {item.statut === "en_attente"
-                        ? "En attente"
-                        : item.statut === "en_transit"
-                          ? "En transit"
-                          : "Livré"}
+                    <div className="mb-1 text-sm text-gray-600">Téléphone: {item.telephone_destinataire}</div>
+                    <div className="mb-1 text-sm text-gray-600">Adresse: {item.adresse_destinataire}</div>
+                    <div className="mb-2 text-sm text-gray-600">
+                      Type: {item.type_colis} • Poids: {item.poids}kg • Valeur: {item.valeur}€
+                    </div>
+                    <div className={`inline-block rounded-full px-3 py-1 text-sm font-medium ${getStatusColor(item.statut)}`}>
+                      {getStatusText(item.statut)}
                     </div>
                   </div>
                 </Link>
