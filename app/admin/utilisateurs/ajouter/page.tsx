@@ -36,7 +36,6 @@ export default function AjouterUtilisateur() {
  
     router.push("/admin/utilisateurs")
   }
-
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
@@ -101,17 +100,17 @@ export default function AjouterUtilisateur() {
           <div className="rounded-lg border bg-white p-6 shadow-sm">
             <form onSubmit={handleSubmit} className="space-y-4 md:w-2/3">
               <div className="space-y-2">
-                <Label htmlFor="nom">Prénom et nom</Label>
+                <Label htmlFor="nom" className="text-black">Prénom et nom</Label>
                 <Input id="nom" name="nom" value={formData.nom} onChange={handleChange} required />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="adresse">Adresse</Label>
+                <Label htmlFor="adresse" className="text-black">Adresse</Label>
                 <Input id="adresse" name="adresse" value={formData.adresse} onChange={handleChange} required />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="contact">Contact</Label>
+                <Label htmlFor="contact" className="text-black">Contact</Label>
                 <Input id="contact" name="contact" value={formData.contact} onChange={handleChange} required />
               </div>
               <div className="pt-4">
@@ -125,7 +124,7 @@ export default function AjouterUtilisateur() {
           <div className="mt-8 rounded-lg border bg-white p-6 shadow-sm">
             <h3 className="mb-4 text-lg font-medium">Liste des utilisateurs</h3>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto text-black">
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="bg-blue-600 text-left text-white">
