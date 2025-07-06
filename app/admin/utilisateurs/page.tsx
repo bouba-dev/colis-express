@@ -69,7 +69,7 @@ export default function GestionUtilisateurs() {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <div className="w-64 border-r bg-white">
+      <div className="w-64 border-r bg-white/95 backdrop-blur-sm">
         <div className="p-4">
           <h1 className="text-2xl font-bold">
             <span className="text-blue-600">Coli</span>
@@ -79,21 +79,21 @@ export default function GestionUtilisateurs() {
         <nav className="mt-6">
           <Link
             href="/admin/dashboard"
-            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-600 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
+            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-700 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
           >
             <LayoutDashboard className="mr-3 h-5 w-5" />
             Tableau de bord
           </Link>
           <Link
             href="/admin/colis"
-            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-600 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
+            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-700 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
           >
             <Package className="mr-3 h-5 w-5" />
             Gestion des colis
           </Link>
           <Link
             href="/admin/statistiques"
-            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-600 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
+            className="flex items-center border-l-4 border-transparent px-4 py-3 text-gray-700 hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600"
           >
             <BarChart2 className="mr-3 h-5 w-5" />
             Statistiques
@@ -118,8 +118,8 @@ export default function GestionUtilisateurs() {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 bg-gray-50">
-        <header className="border-b bg-white p-4 shadow-sm">
+      <div className="flex-1">
+        <header className="border-b bg-white/95 backdrop-blur-sm p-4 shadow-sm">
           <h2 className="text-2xl font-semibold text-blue-600">Gestion des utilisateurs</h2>
         </header>
 
@@ -130,6 +130,7 @@ export default function GestionUtilisateurs() {
                 placeholder="Rechercher un utilisateur..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                className="bg-white text-gray-800 placeholder-gray-500"
               />
               <Button className="bg-blue-600 hover:bg-blue-700">
                 <Search className="h-5 w-5" />
@@ -145,27 +146,27 @@ export default function GestionUtilisateurs() {
             </Link>
           </div>
 
-          <div className="rounded-lg border bg-white p-6 shadow-sm">
+          <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b text-left">
-                    <th className="pb-3 pr-4">ID</th>
-                    <th className="pb-3 pr-4">Nom</th>
-                    <th className="pb-3 pr-4">Email</th>
-                    <th className="pb-3 pr-4">Téléphone</th>
-                    <th className="pb-3 pr-4">Date d&apos;inscription</th>
-                    <th className="pb-3 pr-4">Actions</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">ID</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Nom</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Email</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Téléphone</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Date d&apos;inscription</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredUtilisateurs.map((user) => (
                     <tr key={user.id} className="border-b">
-                      <td className="py-3 pr-4">{user.id}</td>
-                      <td className="py-3 pr-4">{user.nom}</td>
-                      <td className="py-3 pr-4">{user.email}</td>
-                      <td className="py-3 pr-4">{user.telephone}</td>
-                      <td className="py-3 pr-4">{user.dateInscription}</td>
+                      <td className="py-3 pr-4 text-gray-800">{user.id}</td>
+                      <td className="py-3 pr-4 text-gray-800">{user.nom}</td>
+                      <td className="py-3 pr-4 text-gray-800">{user.email}</td>
+                      <td className="py-3 pr-4 text-gray-800">{user.telephone}</td>
+                      <td className="py-3 pr-4 text-gray-800">{user.dateInscription}</td>
                       <td className="py-3 pr-4">
                         <div className="flex gap-2">
                           <Button size="sm" variant="outline" className="text-blue-600 hover:bg-blue-50">

@@ -35,7 +35,7 @@ export default function ConnexionAdmin() {
 
   return (
     <div className="flex min-h-screen items-center justify-center  p-4">
-      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-2xl shadow-black">
+      <div className="w-full max-w-md rounded-lg bg-white/95 backdrop-blur-sm p-6 shadow-2xl shadow-black">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold">
             <span className="text-blue-600">Coli</span>
@@ -45,25 +45,29 @@ export default function ConnexionAdmin() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="nomUtilisateur">Nom d&apos;utilisateur:</Label>
+            <Label htmlFor="nomUtilisateur" className="text-gray-700 font-medium">Nom d&apos;utilisateur:</Label>
             <Input
               id="nomUtilisateur"
               name="nomUtilisateur"
               value={formData.nomUtilisateur}
               onChange={handleChange}
               required
+              className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500"
+              placeholder="Entrez votre nom d'utilisateur"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="motDePasse">Mot de passe:</Label>
+            <Label htmlFor="motDePasse" className="text-gray-700 font-medium">Mot de passe:</Label>
             <Input
               id="motDePasse"
               name="motDePasse"
-              type="password"
+              type="text"
               value={formData.motDePasse}
               onChange={handleChange}
               required
+              className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500"
+              placeholder="Entrez votre mot de passe"
             />
           </div>
 

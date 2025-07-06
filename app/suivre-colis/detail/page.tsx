@@ -34,8 +34,8 @@ export default function DetailColis() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-blue-500">
-      <header className="bg-white p-4 shadow-md">
+    <div className="flex min-h-screen flex-col">
+      <header className="bg-white/95 backdrop-blur-sm p-4 shadow-md">
         <div className="mx-auto flex max-w-6xl items-center">
           <Link href="/suivre-colis" className="mr-4">
             <ArrowLeft className="h-6 w-6 text-blue-600" />
@@ -48,7 +48,7 @@ export default function DetailColis() {
       </header>
 
       <main className="flex flex-1 items-start justify-center p-4 pt-8">
-        <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+        <div className="w-full max-w-md rounded-lg bg-white/95 backdrop-blur-sm p-6 shadow-lg">
           <div className="mb-6 text-center">
             <h2 className="text-xl font-medium text-blue-600">Suivi de mes colis</h2>
           </div>
@@ -60,40 +60,40 @@ export default function DetailColis() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-gray-200 p-4">
+          <div className="rounded-lg border border-gray-200 p-4 bg-white/95 backdrop-blur-sm">
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-gray-600">Numéro de colis:</span>
-                <span className="font-medium">{colis.numero}</span>
+                <span className="text-gray-700">Numéro de colis:</span>
+                <span className="font-medium text-gray-800">{colis.numero}</span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-gray-600">Statut:</span>
+                <span className="text-gray-700">Statut:</span>
                 <span className={`font-medium ${colis.statut === "Livré" ? "text-green-600" : "text-blue-600"}`}>
                   {colis.statut}
                 </span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-gray-600">Date d&apos;envoi:</span>
-                <span className="font-medium">{colis.dateEnvoi}</span>
+                <span className="text-gray-700">Date d&apos;envoi:</span>
+                <span className="font-medium text-gray-800">{colis.dateEnvoi}</span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-gray-600">Destination:</span>
-                <span className="font-medium">{colis.destination}</span>
+                <span className="text-gray-700">Destination:</span>
+                <span className="font-medium text-gray-800">{colis.destination}</span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-gray-600">Livraison estimée:</span>
-                <span className="font-medium">{colis.estimatedDelivery}</span>
+                <span className="text-gray-700">Livraison estimée:</span>
+                <span className="font-medium text-gray-800">{colis.estimatedDelivery}</span>
               </div>
             </div>
 
             <div className="mt-4">
               <div className="mb-2 flex justify-between">
-                <span>Progression</span>
-                <span>{colis.statut === "Livré" ? "100%" : "75%"}</span>
+                <span className="text-gray-700">Progression</span>
+                <span className="text-gray-800">{colis.statut === "Livré" ? "100%" : "75%"}</span>
               </div>
               <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
                 <div className="h-full bg-green-500" style={{ width: colis.statut === "Livré" ? "100%" : "75%" }}></div>

@@ -65,15 +65,15 @@ export default function AdminDashboard() {
       <AdminSidebar activePage="dashboard" />
 
       {/* Main content */}
-      <div className="flex-1 bg-gray-50">
-        <header className="border-b bg-white p-4 shadow-sm">
+      <div className="flex-1">
+        <header className="border-b bg-white/95 backdrop-blur-sm p-4 shadow-sm">
           <h2 className="text-2xl font-semibold text-blue-600">Tableau de bord</h2>
         </header>
 
         <main className="p-6">
           {/* Statistics */}
           <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-            <div className="flex items-center rounded-lg border bg-white p-4 shadow-sm">
+            <div className="flex items-center rounded-lg border bg-white/95 backdrop-blur-sm p-4 shadow-sm">
               <div className="mr-4 rounded-lg border p-3">
                 <Image
                   src="/attente.png"
@@ -84,12 +84,12 @@ export default function AdminDashboard() {
                 />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Colis en attente:</p>
-                <p className="text-2xl font-bold">{statistiques.enAttente}</p>
+                <p className="text-sm text-gray-700">Colis en attente:</p>
+                <p className="text-2xl font-bold text-gray-800">{statistiques.enAttente}</p>
               </div>
             </div>
 
-            <div className="flex items-center rounded-lg border bg-white p-4 shadow-sm">
+            <div className="flex items-center rounded-lg border bg-white/95 backdrop-blur-sm p-4 shadow-sm">
               <div className="mr-4 rounded-lg border p-3">
                 <Image
                   src="/transit.png"
@@ -100,12 +100,12 @@ export default function AdminDashboard() {
                 />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Colis en transit:</p>
-                <p className="text-2xl font-bold">{statistiques.enTransit}</p>
+                <p className="text-sm text-gray-700">Colis en transit:</p>
+                <p className="text-2xl font-bold text-gray-800">{statistiques.enTransit}</p>
               </div>
             </div>
 
-            <div className="flex items-center rounded-lg border bg-white p-4 shadow-sm">
+            <div className="flex items-center rounded-lg border bg-white/95 backdrop-blur-sm p-4 shadow-sm">
               <div className="mr-4 rounded-lg border p-3">
                 <Image
                   src="/12.png"
@@ -116,37 +116,37 @@ export default function AdminDashboard() {
                 />
               </div>
               <div>
-                <p className="text-sm text-gray-500">Colis livrés:</p>
-                <p className="text-2xl font-bold">{statistiques.livres}</p>
+                <p className="text-sm text-gray-700">Colis livrés:</p>
+                <p className="text-2xl font-bold text-gray-800">{statistiques.livres}</p>
               </div>
             </div>
           </div>
 
           {/* Recent packages */}
-          <div className="rounded-lg border bg-white p-6 shadow-sm">
-            <h3 className="mb-6 text-xl font-semibold">Derniers colis</h3>
+          <div className="rounded-lg border bg-white/95 backdrop-blur-sm p-6 shadow-sm">
+            <h3 className="mb-6 text-xl font-semibold text-gray-800">Derniers colis</h3>
 
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="border-b text-left">
-                    <th className="pb-3 pr-4">ID</th>
-                    <th className="pb-3 pr-4">Expéditeurs</th>
-                    <th className="pb-3 pr-4">Destinataires</th>
-                    <th className="pb-3 pr-4">Destination</th>
-                    <th className="pb-3 pr-4">Agence</th>
-                    <th className="pb-3 pr-4">Statut</th>
-                    <th className="pb-3 pr-4">Actions</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">ID</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Expéditeurs</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Destinataires</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Destination</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Agence</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Statut</th>
+                    <th className="pb-3 pr-4 text-gray-700 font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {colis.map((coli) => (
                     <tr key={coli.id} className="border-b">
-                      <td className="py-3 pr-4">{coli.id}</td>
-                      <td className="py-3 pr-4">{coli.expediteur}</td>
-                      <td className="py-3 pr-4">{coli.destinataire}</td>
-                      <td className="py-3 pr-4">{coli.destination}</td>
-                      <td className="py-3 pr-4">{coli.agence}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.id}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.expediteur}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.destinataire}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.destination}</td>
+                      <td className="py-3 pr-4 text-gray-800">{coli.agence}</td>
                       <td className="py-3 pr-4">
                         <div className="flex items-center gap-2">
                           <span
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
                                   : "bg-green-400"
                             }`}
                           ></span>
-                          {coli.statut}
+                          <span className="text-gray-800">{coli.statut}</span>
                         </div>
                       </td>
                       <td className="py-3 pr-4">
