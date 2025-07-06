@@ -14,6 +14,7 @@ export default function AjouterColis() {
   const router = useRouter()
   const [step, setStep] = useState(1)
   const [showSuggestions, setShowSuggestions] = useState(false)
+  const [isSelectingSuggestion, setIsSelectingSuggestion] = useState(false)
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [formData, setFormData] = useState<{
     nomDestinataire: string
@@ -57,9 +58,20 @@ export default function AjouterColis() {
     }
   }
 
-  const handleSuggestionClick = (suggestion: string) => {
+  const handleSuggestionClick = (suggestion: string, e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     setFormData((prev) => ({ ...prev, typeColis: suggestion }))
     setShowSuggestions(false)
+  }
+
+  const handleInputBlur = (e: React.FocusEvent) => {
+    // Vérifier si le clic était sur une suggestion
+    const target = e.relatedTarget as HTMLElement
+    if (target && target.closest('.suggestions-container')) {
+      return // Ne pas fermer si on clique sur une suggestion
+    }
+    setTimeout(() => setShowSuggestions(false), 100)
   }
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -206,7 +218,7 @@ export default function AjouterColis() {
                       value={formData.typeColis}
                       onChange={handleChange}
                       onFocus={() => setShowSuggestions(true)}
-                      onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                      onBlur={handleInputBlur}
                       required
                       className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 pr-10"
                       placeholder="Tapez ou sélectionnez un type..."
@@ -223,8 +235,8 @@ export default function AjouterColis() {
                             <button
                               key={index}
                               type="button"
-                              className="w-full px-3 py-2 text-left hover:bg-blue-50 focus:bg-blue-50 focus:outline-none text-gray-700"
-                              onClick={() => handleSuggestionClick(suggestion)}
+                              className="w-full px-3 py-2 text-left hover:bg-blue-50 focus:bg-blue-50 focus:outline-none text-gray-700 suggestions-container"
+                              onClick={(e) => handleSuggestionClick(suggestion, e)}
                             >
                               {suggestion}
                             </button>
