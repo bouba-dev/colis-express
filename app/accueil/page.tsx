@@ -42,7 +42,7 @@ export default function Accueil() {
             Simplifiez vos envois
           </h2>
           <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Automatisez la gestion de vos colis grâce à notre plateforme tout-en-un.
+            Automatisez la gestion de vos Colis grâce à notre plateforme tout-en-un.
             Créez, suivez et analysez vos envois en toute simplicité.
           </p>
         </section>
