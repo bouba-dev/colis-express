@@ -13,9 +13,11 @@ import { LayoutDashboard, Package, BarChart2, Users, LogOut } from "lucide-react
 export default function AjouterColis() {
   const router = useRouter()
   const [formData, setFormData] = useState({
-    destinataire: "",
-    telephone: "",
+    description: "",
+    poids: "",
     destination: "",
+    date_envoi: "",
+    // pas de numero_suivi, utilisateur_id, statut_id ici
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,11 +25,23 @@ export default function AjouterColis() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Données du colis:", formData)
-    // Ici, vous ajouteriez la logique pour enregistrer le colis
-    router.push("/admin/colis")
+
+    // Appel à l'API backend pour enregistrer le colis
+    const res = await fetch("http://localhost:3000/api/colis", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
+
+    if (res.ok) {
+      alert("Colis ajouté !")
+      router.push("/admin/colis")
+    } else {
+      const error = await res.json().catch(() => ({}))
+      alert(error.message || "Erreur lors de l'ajout du colis")
+    }
   }
 
   return (
@@ -94,21 +108,25 @@ export default function AjouterColis() {
           <div className="rounded-lg border bg-white p-6 shadow-sm">
             <form onSubmit={handleSubmit} className="space-y-4 md:w-2/3">
               <div className="space-y-2">
-                <Label htmlFor="destinataire">Destinataire</Label>
+                <Label htmlFor="description">Description</Label>
                 <Input
-                  id="destinataire"
-                  name="destinataire"
-                  value={formData.destinataire}
+                  id="description"
+                  name="description"
+                  value={formData.description}
                   onChange={handleChange}
                   required
                 />
               </div>
-
               <div className="space-y-2">
-                <Label htmlFor="telephone">Téléphone</Label>
-                <Input id="telephone" name="telephone" value={formData.telephone} onChange={handleChange} required />
+                <Label htmlFor="poids">Poids (kg)</Label>
+                <Input
+                  id="poids"
+                  name="poids"
+                  value={formData.poids}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="destination">Destination</Label>
                 <Input
@@ -119,7 +137,17 @@ export default function AjouterColis() {
                   required
                 />
               </div>
-
+              <div className="space-y-2">
+                <Label htmlFor="date_envoi">Date d'envoi</Label>
+                <Input
+                  id="date_envoi"
+                  name="date_envoi"
+                  type="date"
+                  value={formData.date_envoi}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
               <div className="pt-4">
                 <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
                   Ajouter

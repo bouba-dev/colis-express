@@ -19,9 +19,15 @@ exports.getById = (req, res) => {
 
 // POST /api/colis
 exports.create = (req, res) => {
-  Colis.addColis(req.body, (err, result) => {
+  const colisData = {
+    ...req.body,
+    numero_suivi: generateTrackingNumber(),
+    utilisateur_id: req.user ? req.user.id : null, // si tu utilises l'authentification
+    statut_id: 1 // ou la valeur par défaut pour "En attente"
+  };
+  Colis.addColis(colisData, (err, result) => {
     if (err) return res.status(500).json({ error: err });
-    res.status(201).json({ id: result.insertId, ...req.body });
+    res.status(201).json({ id: result.insertId, ...colisData });
   });
 };
 

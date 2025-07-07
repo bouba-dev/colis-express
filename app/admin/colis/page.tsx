@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,62 +8,13 @@ import { LayoutDashboard, Package, BarChart2, Users, LogOut, Search, Plus } from
 
 export default function GestionColis() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [colis, setColis] = useState([
-    {
-      id: "001",
-      expediteur: "Mohamed Touré",
-      destinataire: "Mariam Maïga",
-      destination: "Tombouctou",
-      agence: "Tilemsi",
-      statut: "En attente",
-      date: "25/04/2025",
-    },
-    {
-      id: "002",
-      expediteur: "Aly Konaté",
-      destinataire: "Ami Cissé",
-      destination: "Kayes",
-      agence: "Nour Transport",
-      statut: "En attente",
-      date: "26/04/2025",
-    },
-    {
-      id: "003",
-      expediteur: "Fatoumata Lah",
-      destinataire: "Oumou Keita",
-      destination: "Sévaré",
-      agence: "Africa Tours",
-      statut: "En attente",
-      date: "27/04/2025",
-    },
-    {
-      id: "004",
-      expediteur: "Aïcha Sow",
-      destinataire: "Moussa Sy",
-      destination: "Ségou",
-      agence: "Tilemsi",
-      statut: "En attente",
-      date: "28/04/2025",
-    },
-    {
-      id: "005",
-      expediteur: "Ibrahim Diallo",
-      destinataire: "Kadiatou Diop",
-      destination: "Bamako",
-      agence: "Nour Transport",
-      statut: "En transit",
-      date: "24/04/2025",
-    },
-    {
-      id: "006",
-      expediteur: "Seydou Coulibaly",
-      destinataire: "Aminata Traoré",
-      destination: "Mopti",
-      agence: "Africa Tours",
-      statut: "Livré",
-      date: "20/04/2025",
-    },
-  ])
+  const [colis, setColis] = useState([])
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/colis")
+      .then((res) => res.json())
+      .then((data) => setColis(data))
+  }, [])
 
   const filteredColis = colis.filter(
     (coli) =>
@@ -178,7 +129,7 @@ export default function GestionColis() {
                   {filteredColis.map((coli) => (
                     <tr key={coli.id} className="border-b">
                       <td className="py-3 pr-4">{coli.id}</td>
-                      <td className="py-3 pr-4">{coli.date}</td>
+                      <td className="py-3 pr-4">{coli.date_envoi}</td>
                       <td className="py-3 pr-4">{coli.expediteur}</td>
                       <td className="py-3 pr-4">{coli.destinataire}</td>
                       <td className="py-3 pr-4">{coli.destination}</td>

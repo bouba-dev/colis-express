@@ -44,22 +44,9 @@ exports.delete = (req, res) => {
 // POST /api/utilisateur/login
 exports.login = (req, res) => {
   const { nomUtilisateur, motDePasse } = req.body;
-  Utilisateur.getUtilisateurByEmail(nomUtilisateur, (err, results) => {
-    if (err) return res.status(500).json({ error: err });
-    if (results.length === 0) return res.status(401).json({ message: "Utilisateur non trouvé" });
-
-    const utilisateur = results[0];
-    if (utilisateur.mot_de_passe !== motDePasse) {
-      return res.status(401).json({ message: "Mot de passe incorrect" });
-    }
-    res.json({
-      message: "Connexion réussie",
-      utilisateur: {
-        id: utilisateur.id,
-        nom: utilisateur.nom,
-        email: utilisateur.email,
-        role: utilisateur.role
-      }
-    });
+  Utilisateur.findByCredentials(nomUtilisateur, motDePasse, (err, user) => {
+    if (err) return res.status(500).json({ error: "Erreur serveur" });
+    if (!user) return res.status(401).json({ error: "Identifiants invalides" });
+    res.json({ message: "Connexion réussie", user });
   });
 };
