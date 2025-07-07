@@ -5,7 +5,7 @@ console.log('🔍 Test de connexion à la base de données...');
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '12345567890',
+  password: 'K@ou2021',
   database: 'gestion_colis',
 });
 
