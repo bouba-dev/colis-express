@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 require('dotenv').config();
 const utilisateurRoutes = require("./routes/utilisateur");
+const { initAdmin } = require("./utils/initAdmin");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -177,6 +178,7 @@ app.get("/api/statut", (req, res) => {
     { id: 5, nom: "livre", description: "Livré" }
   ]);
 });
+initAdmin();
 
 // Démarrage du serveur
 app.listen(PORT, () => {

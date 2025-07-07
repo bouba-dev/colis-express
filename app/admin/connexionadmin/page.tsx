@@ -12,7 +12,7 @@ export default function ConnexionAdmin() {
   const router = useRouter()
   const [isVisible, setIsVisible] = useState(false)
   const [formData, setFormData] = useState({
-    nomUtilisateur: "",
+    nom: "",
     motDePasse: "",
   })
 
@@ -35,7 +35,7 @@ export default function ConnexionAdmin() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          nomUtilisateur: formData.nomUtilisateur,
+          nom: formData.nom,
           motDePasse: formData.motDePasse,
         }),
       })
@@ -46,6 +46,12 @@ export default function ConnexionAdmin() {
         alert(data.error || "Erreur lors de la connexion")
         return
       }
+      
+      if (!response.ok) {
+  const errorData = await response.json();
+  alert(errorData.error || "Erreur lors de la connexion");
+  return;
+}
 
       if (data.user?.role !== "admin") {
         alert("Accès refusé : vous n'êtes pas administrateur.")
@@ -85,8 +91,8 @@ export default function ConnexionAdmin() {
             </Label>
             <Input
               id="nomUtilisateur"
-              name="nomUtilisateur"
-              value={formData.nomUtilisateur}
+              name="nom"
+              value={formData.nom}
               onChange={handleChange}
               required
               className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 transition-all duration-300 hover:shadow-md focus:shadow-lg"
