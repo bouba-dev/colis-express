@@ -21,16 +21,29 @@ export default function ConnexionAdmin() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Données de connexion admin:", formData)
-
-    // Définir des cookies d'authentification (dans une application réelle, vous utiliseriez un token JWT)
-    setCookie("auth", "authenticated", { maxAge: 60 * 60 * 24 }) // 24 heures
-    setCookie("admin_auth", "admin_authenticated", { maxAge: 60 * 60 * 24 }) // 24 heures
-
-    // Rediriger vers le tableau de bord admin
-    router.push("/accueil")
+    try {
+      const res = await fetch("http://localhost:3000/api/utilisateur/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nomUtilisateur: formData.nomUtilisateur,
+          motDePasse: formData.motDePasse,
+        }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setCookie("auth", "authenticated", { maxAge: 60 * 60 * 24 })
+        setCookie("admin_auth", "admin_authenticated", { maxAge: 60 * 60 * 24 })
+        router.push("/accueil")
+      } else {
+        const error = await res.json()
+        alert(error.error || "Identifiants invalides")
+      }
+    } catch (err) {
+      alert("Erreur réseau")
+    }
   }
 
   return (

@@ -59,14 +59,10 @@ export default function GestionUtilisateurs() {
 
   const filteredUtilisateurs = utilisateurs.filter(
     (user) =>
-      user.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()),
+      (user.id + "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (user.nom + " ").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (user.email || "").toLowerCase().includes(searchTerm.toLowerCase()),
   )
-
-  const handleChangeRole = (id: string, newRole: string) => {
-    setUtilisateurs(utilisateurs.map((user) => (user.id === id ? { ...user, role: newRole } : user)))
-  }
 
   const handleDelete = (id: string) => {
     setUtilisateurs(utilisateurs.filter((user) => user.id !== id))
@@ -208,6 +204,11 @@ export default function GestionUtilisateurs() {
                       </td>
                     </tr>
                   ))}
+                  {filteredUtilisateurs.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="p-2 text-center">Aucun utilisateur trouvé.</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

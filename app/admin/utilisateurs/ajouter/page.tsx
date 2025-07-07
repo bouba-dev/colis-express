@@ -18,8 +18,17 @@ export default function AjouterUtilisateur() {
     prenom: "",
     adresse: "",
     contact: "",
+    email: "",
+    mot_de_passe: "",
     role: "Client",
   })
+  const [utilisateurs, setUtilisateurs] = useState([])
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/utilisateur")
+      .then((res) => res.json())
+      .then((data) => setUtilisateurs(data))
+  }, [])
 
   useEffect(() => {
     // Trigger animations after component mounts
@@ -36,11 +45,33 @@ export default function AjouterUtilisateur() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Données utilisateur:", formData)
- 
-    router.push("/admin/utilisateurs")
+
+    // Prépare les données à envoyer (adapte les noms de champs selon ta base)
+    const dataToSend = {
+      nom: formData.nom,
+      prenom: formData.prenom,
+      adresse: formData.adresse,
+      contact: formData.contact,
+      email: formData.email,
+      mot_de_passe: formData.mot_de_passe,
+      role: formData.role || "Client",
+    }
+
+    const res = await fetch("http://localhost:3000/api/utilisateur", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dataToSend),
+    })
+
+    if (res.ok) {
+      alert("Utilisateur ajouté !")
+      router.push("/admin/utilisateurs")
+    } else {
+      const error = await res.json().catch(() => ({}))
+      alert(error.message || "Erreur lors de l'ajout")
+    }
   }
   return (
     <div className="flex min-h-screen">

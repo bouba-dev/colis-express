@@ -24,10 +24,28 @@ export default function Inscription() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Données d'inscription:", formData)
-    // Ici, vous ajouteriez la logique pour envoyer les données au serveur
+    try {
+      const res = await fetch("http://localhost:3000/api/utilisateur", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nom: formData.nom,
+          email: formData.contact, // ou adapte selon ton backend
+          mot_de_passe: formData.motDePasse,
+          role: "client"
+        })
+      })
+      if (res.ok) {
+        router.push("/accueil")
+      } else {
+        const error = await res.json()
+        alert("Erreur lors de l'inscription: " + (error.error || error.message))
+      }
+    } catch (err) {
+      alert("Erreur réseau")
+    }
   }
 
   const next = () => {
@@ -107,7 +125,47 @@ export default function Inscription() {
             />
           </div>
 
-          <Button type="button" onClick={next} className="w-full bg-blue-600 hover:bg-blue-700">
+          <div className="space-y-2">
+            <Label htmlFor="contact" className="text-gray-700 font-medium">Contact</Label>
+            <Input 
+              id="contact" 
+              name="contact" 
+              value={formData.contact} 
+              onChange={handleChange} 
+              required 
+              className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500"
+              placeholder="Votre numéro de téléphone"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="adresse" className="text-gray-700 font-medium">Adresse</Label>
+            <Input 
+              id="adresse" 
+              name="adresse" 
+              value={formData.adresse} 
+              onChange={handleChange} 
+              required 
+              className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500"
+              placeholder="Votre adresse complète"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="motDePasse" className="text-gray-700 font-medium">Mot de passe</Label>
+            <Input
+              id="motDePasse"
+              name="motDePasse"
+              type="text"
+              value={formData.motDePasse}
+              onChange={handleChange}
+              required
+              className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500"
+              placeholder="Choisissez un mot de passe"
+            />
+          </div>
+
+          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
             S&apos;inscrire
           </Button>
           <div className="flex items-center my-4">

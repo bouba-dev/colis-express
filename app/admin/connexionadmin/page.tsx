@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -27,16 +26,41 @@ export default function ConnexionAdmin() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Données de connexion admin:", formData)
 
-    // Définir des cookies d'authentification (dans une application réelle, vous utiliseriez un token JWT)
-    setCookie("auth", "authenticated", { maxAge: 60 * 60 * 24 }) // 24 heures
-    setCookie("admin_auth", "admin_authenticated", { maxAge: 60 * 60 * 24 }) // 24 heures
+    try {
+      const response = await fetch("http://localhost:3000/api/utilisateur/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nomUtilisateur: formData.nomUtilisateur,
+          motDePasse: formData.motDePasse,
+        }),
+      })
 
-    // Rediriger vers le tableau de bord admin
-    router.push("/admin/dashboard")
+      const data = await response.json()
+
+      if (!response.ok) {
+        alert(data.error || "Erreur lors de la connexion")
+        return
+      }
+
+      if (data.user?.role !== "admin") {
+        alert("Accès refusé : vous n'êtes pas administrateur.")
+        return
+      }
+
+      setCookie("auth", "authenticated", { maxAge: 60 * 60 * 24 })
+      setCookie("admin_auth", "admin_authenticated", { maxAge: 60 * 60 * 24 })
+
+      router.push("/admin/dashboard")
+    } catch (error) {
+      console.error("Erreur de connexion :", error)
+      alert("Erreur serveur, veuillez réessayer plus tard.")
+    }
   }
 
   return (

@@ -40,3 +40,13 @@ exports.delete = (req, res) => {
     res.json({ message: "Utilisateur supprimé" });
   });
 };
+
+// POST /api/utilisateur/login
+exports.login = (req, res) => {
+  const { nomUtilisateur, motDePasse } = req.body;
+  Utilisateur.findByCredentials(nomUtilisateur, motDePasse, (err, user) => {
+    if (err) return res.status(500).json({ error: "Erreur serveur" });
+    if (!user) return res.status(401).json({ error: "Identifiants invalides" });
+    res.json({ message: "Connexion réussie", user });
+  });
+};

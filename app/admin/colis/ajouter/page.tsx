@@ -14,9 +14,11 @@ export default function AjouterColis() {
   const router = useRouter()
   const [isVisible, setIsVisible] = useState(false)
   const [formData, setFormData] = useState({
-    destinataire: "",
+    description: "",
     telephone: "",
     destination: "",
+    date_envoi: "",
+    // pas de numero_suivi, utilisateur_id, statut_id ici
   })
 
   useEffect(() => {
@@ -29,11 +31,23 @@ export default function AjouterColis() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Données du colis:", formData)
-    // Ici, vous ajouteriez la logique pour enregistrer le colis
-    router.push("/admin/colis")
+
+    // Appel à l'API backend pour enregistrer le colis
+    const res = await fetch("http://localhost:3000/api/colis", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
+
+    if (res.ok) {
+      alert("Colis ajouté !")
+      router.push("/admin/colis")
+    } else {
+      const error = await res.json().catch(() => ({}))
+      alert(error.message || "Erreur lors de l'ajout du colis")
+    }
   }
 
   return (
@@ -118,9 +132,9 @@ export default function AjouterColis() {
                   Destinataire
                 </Label>
                 <Input
-                  id="destinataire"
-                  name="destinataire"
-                  value={formData.destinataire}
+                  id="description"
+                  name="description"
+                  value={formData.description}
                   onChange={handleChange}
                   required
                   className="bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 transition-all duration-300 hover:shadow-md focus:shadow-lg"
