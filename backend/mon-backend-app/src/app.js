@@ -160,6 +160,7 @@ app.get("/api/statut", (req, res) => {
     { id: 5, nom: "livre", description: "Livré" }
   ]);
 });
+initAdmin();
 
 // Démarrage du serveur
 app.listen(PORT, () => {

@@ -42,11 +42,22 @@ exports.delete = (req, res) => {
 };
 
 // POST /api/utilisateur/login
+// exports.login = (req, res) => {
+//   const { nom, motDePasse } = req.body;
+//   Utilisateur.findByCredentials(nom, motDePasse, (err, user) => {
+//     if (err) return res.status(500).json({ error: "Erreur serveur" });
+    
+//     if (!user) return res.status(401).json({ error: "Identifiants invalides" });
+//     res.json({ message: "Connexion réussie", user });
+//   });
+// };
 exports.login = (req, res) => {
-  const { nomUtilisateur, motDePasse } = req.body;
-  Utilisateur.findByCredentials(nomUtilisateur, motDePasse, (err, user) => {
+  const { nom, motDePasse } = req.body;
+  Utilisateur.findByCredentials(nom, motDePasse, (err, user) => {
     if (err) return res.status(500).json({ error: "Erreur serveur" });
+    
     if (!user) return res.status(401).json({ error: "Identifiants invalides" });
     res.json({ message: "Connexion réussie", user });
   });
 };
+// Exports des fonctions pour les utiliser dans les routes
