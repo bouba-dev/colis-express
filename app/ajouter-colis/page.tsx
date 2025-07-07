@@ -115,11 +115,45 @@ export default function AjouterColis() {
     setStep(1)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Données du colis:", formData)
-    // Ici, vous ajouteriez la logique pour enregistrer le colis
-    router.push("/accueil")
+    
+    // Préparer les données pour l'API
+    const colisData = {
+      nom_destinataire: formData.nomDestinataire,
+      telephone_destinataire: formData.telephone,
+      adresse_destinataire: formData.adresse,
+      type_colis: formData.typeColis,
+      poids: parseFloat(formData.poids) || 0,
+      valeur: parseFloat(formData.valeur) || 0,
+      utilisateur_id: 1, // ID par défaut pour l'utilisateur
+      statut_id: 1, // Statut par défaut (en_attente)
+      date_envoi: new Date().toISOString().split('T')[0],
+      montant: 0, // Sera calculé par le backend
+      moyen_paiement: 'Espèces'
+    }
+    
+    try {
+      const response = await fetch('/api/colis', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(colisData)
+      })
+      
+      if (response.ok) {
+        const result = await response.json()
+        console.log('Colis créé avec succès:', result)
+        router.push("/accueil")
+      } else {
+        console.error('Erreur lors de la création du colis')
+        alert('Erreur lors de la création du colis')
+      }
+    } catch (error) {
+      console.error('Erreur:', error)
+      alert('Erreur lors de la création du colis')
+    }
   }
   const handleSubmite = () => {
     console.log("Données de livraison:", formData)
